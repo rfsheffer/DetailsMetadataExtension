@@ -1,6 +1,8 @@
 # DetailsMetadataExtension
 
-A plugin which extends a blueprints variables details panel with the ability to add Metadata key/values. These keys with value can be queried to have some extra information to work with while for example serializing a property. I use it with my games save/load to know which properties are time floats and need to be offset to the new time origin when the level is loaded. This plugin is useful for advanced users which need to mark blueprint variables like they can in C++ property meta.
+Editor Only Extension!
+
+A plugin which exposes the editor only metadata that can be set per property as an extension to the properties panel. The metadata is editable and you can add new metadata key values. This can be useful for exposing special meta data key values in blueprints which change the appearance of the property or add extra functionality. It could also be useful for creating new editor extensions which harnesses metadata to display specific variables in a special way.
 
 In C++, a property with custom meta looks like this:
 ```
