@@ -10,7 +10,7 @@ public class DetailsMetadataExtension : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		// Disable for Non-Developer builds
-		OptimizeCode = CodeOptimization.Never;
+		//OptimizeCode = CodeOptimization.Never;
 
         PrivateDependencyModuleNames.AddRange(
 	        new string[]
