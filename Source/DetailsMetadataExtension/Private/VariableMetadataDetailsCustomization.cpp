@@ -2,7 +2,7 @@
 
 #include "VariableMetadataDetailsCustomization.h"
 #include "Kismet2/BlueprintEditorUtils.h"
-#include "ControlRig.h"
+//#include "ControlRig.h"
 #include "DetailLayoutBuilder.h"
 #include "BlueprintEditorModule.h"
 #include "DetailCategoryBuilder.h"
