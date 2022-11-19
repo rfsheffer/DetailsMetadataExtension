@@ -1,4 +1,4 @@
-﻿// Copyright 2020-2021 Sheffer Online Services. All Rights Reserved.
+﻿// Copyright 2020-2023 Solar Storm Interactive
 
 #include "VariableMetadataDetailsCustomization.h"
 #include "Kismet2/BlueprintEditorUtils.h"
