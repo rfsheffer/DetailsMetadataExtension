@@ -18,6 +18,9 @@ public:
 
     virtual void StartupModule() override;
     virtual void ShutdownModule() override;
+
+private:
+    FDelegateHandle GetVariableCustomizationInstanceDelegateHandle;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -33,7 +36,9 @@ void FDetailsMetadataExtensionModule::StartupModule()
 {
     // Register Blueprint editor variable customization
     FBlueprintEditorModule& BlueprintEditorModule = FModuleManager::LoadModuleChecked<FBlueprintEditorModule>("Kismet");
-    BlueprintEditorModule.RegisterVariableCustomization(FProperty::StaticClass(), FOnGetVariableCustomizationInstance::CreateStatic(&FVariableMetadataDetailsCustomization::MakeInstance));
+    GetVariableCustomizationInstanceDelegateHandle = BlueprintEditorModule.RegisterVariableCustomization(
+        FProperty::StaticClass(),
+        FOnGetVariableCustomizationInstance::CreateStatic(&FVariableMetadataDetailsCustomization::MakeInstance));
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -44,7 +49,8 @@ void FDetailsMetadataExtensionModule::ShutdownModule()
     FBlueprintEditorModule* BlueprintEditorModule = FModuleManager::GetModulePtr<FBlueprintEditorModule>("Kismet");
     if (BlueprintEditorModule)
     {
-        BlueprintEditorModule->UnregisterVariableCustomization(FProperty::StaticClass());
+        BlueprintEditorModule->UnregisterVariableCustomization(FProperty::StaticClass(),
+                                                               GetVariableCustomizationInstanceDelegateHandle);
     }
 }
 
