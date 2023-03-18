@@ -19,8 +19,10 @@ public:
     virtual void StartupModule() override;
     virtual void ShutdownModule() override;
 
+#if ENGINE_MAJOR_VERSION > 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1)
 private:
     FDelegateHandle GetVariableCustomizationInstanceDelegateHandle;
+#endif
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -36,9 +38,13 @@ void FDetailsMetadataExtensionModule::StartupModule()
 {
     // Register Blueprint editor variable customization
     FBlueprintEditorModule& BlueprintEditorModule = FModuleManager::LoadModuleChecked<FBlueprintEditorModule>("Kismet");
+#if ENGINE_MAJOR_VERSION > 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1)
     GetVariableCustomizationInstanceDelegateHandle = BlueprintEditorModule.RegisterVariableCustomization(
         FProperty::StaticClass(),
         FOnGetVariableCustomizationInstance::CreateStatic(&FVariableMetadataDetailsCustomization::MakeInstance));
+#else
+    BlueprintEditorModule.RegisterVariableCustomization(FProperty::StaticClass(), FOnGetVariableCustomizationInstance::CreateStatic(&FVariableMetadataDetailsCustomization::MakeInstance));
+#endif
 }
 
 //--------------------------------------------------------------------------------------------------------------------
@@ -49,8 +55,12 @@ void FDetailsMetadataExtensionModule::ShutdownModule()
     FBlueprintEditorModule* BlueprintEditorModule = FModuleManager::GetModulePtr<FBlueprintEditorModule>("Kismet");
     if (BlueprintEditorModule)
     {
+#if ENGINE_MAJOR_VERSION > 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1)
         BlueprintEditorModule->UnregisterVariableCustomization(FProperty::StaticClass(),
-                                                               GetVariableCustomizationInstanceDelegateHandle);
+                                                                       GetVariableCustomizationInstanceDelegateHandle);
+#else
+        BlueprintEditorModule->UnregisterVariableCustomization(FProperty::StaticClass());
+#endif
     }
 }
 
